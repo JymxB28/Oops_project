@@ -399,7 +399,7 @@ void fine_charging(students *&stud)
     {
         int number_of_days = return_days(stud->day_issued, stud->month_issued, stud->year_issued, stud->day_returned, stud->month_returned, stud->year_returned);
         stud->fine_charged = (number_of_days - stud->number_days) * 2;
-        if (stud->fine_charged < 0)
+        if (stud->fine_charged < 0 || stud->day_returned == 0)
             stud->fine_charged = 0;
         return;
     }
@@ -600,110 +600,110 @@ void fine_charging(students *&stud)
 // }
 
 // //--------------------------------------------------------books----------------------------------------------------------------------
-// class books
-// {
-// public:
-//     string book_name;
-//     int book_id;
-//     books *next;
-//     books()
-//     {
-//         next = NULL;
-//     }
-// };
+class books
+{
+public:
+    string book_name;
+    int book_id;
+    books *next;
+    books()
+    {
+        next = NULL;
+    }
+};
 
-// void add_new_book(books *&head)
-// {
-//     books *new_book = new books();
-//     cout << "ENTER BOOK NAME: ";
-//     cin >> new_book->book_name;
-//     cout << "ENTER BOOK ID: ";
-//     cin >> new_book->book_id;
-//     if (head == NULL)
-//     {
-//         head = new_book;
-//         return;
-//     }
-//     books *tmp = head;
-//     while (tmp->next != NULL)
-//     {
-//         tmp = tmp->next;
-//     }
-//     tmp->next = new_book;
-// }
+void add_new_book(books *&head)
+{
+    books *new_book = new books();
+    cout << "ENTER BOOK NAME: ";
+    cin >> new_book->book_name;
+    cout << "ENTER BOOK ID: ";
+    cin >> new_book->book_id;
+    if (head == NULL)
+    {
+        head = new_book;
+        return;
+    }
+    books *tmp = head;
+    while (tmp->next != NULL)
+    {
+        tmp = tmp->next;
+    }
+    tmp->next = new_book;
+}
 
-// void display(books *head)
-// {
-//     if (head == NULL)
-//     {
-//         cout << "NO LIST AVAILABLE";
-//         return;
-//     }
-//     books *tmp = head;
-//     cout << "NAME"
-//          << "             "
-//          << "book ID" << endl;
-//     while (1)
-//     {
-//         cout << tmp->book_name << "                 " << tmp->book_id << endl;
-//         if (tmp->next == NULL)
-//             return;
-//         else
-//             tmp = tmp->next;
-//     }
-// }
+void display(books *head)
+{
+    if (head == NULL)
+    {
+        cout << "NO LIST AVAILABLE";
+        return;
+    }
+    books *tmp = head;
+    cout << "NAME"
+         << "             "
+         << "book ID" << endl;
+    while (1)
+    {
+        cout << tmp->book_name << "                 " << tmp->book_id << endl;
+        if (tmp->next == NULL)
+            return;
+        else
+            tmp = tmp->next;
+    }
+}
 
-// void remove_a_book(books *&head)
-// {
-//     string name;
-//     int book_idno, choice;
-//     cout << "search by:" << endl;
-//     cout << "1. name" << endl;
-//     cout << "2. book id" << endl;
-//     cout << "ENTER CHOICE: ";
-//     cin >> choice;
-//     if (choice == 1)
-//     {
-//         cout << "	ENTER book NAME: ";
-//         cin >> name;
-//         books *temp = head;
-//         if (temp->book_name == name)
-//         {
-//             head = temp->next;
-//         }
-//         else
-//             while (1)
-//             {
-//                 if (temp->next->book_name == name)
-//                 {
-//                     temp->next = temp->next->next;
-//                     break;
-//                 }
-//                 temp = temp->next;
-//             }
-//     }
+void remove_a_book(books *&head)
+{
+    string name;
+    int book_idno, choice;
+    cout << "search by:" << endl;
+    cout << "1. name" << endl;
+    cout << "2. book id" << endl;
+    cout << "ENTER CHOICE: ";
+    cin >> choice;
+    if (choice == 1)
+    {
+        cout << "	ENTER book NAME: ";
+        cin >> name;
+        books *temp = head;
+        if (temp->book_name == name)
+        {
+            head = temp->next;
+        }
+        else
+            while (1)
+            {
+                if (temp->next->book_name == name)
+                {
+                    temp->next = temp->next->next;
+                    break;
+                }
+                temp = temp->next;
+            }
+    }
 
-//     else if (choice == 2)
-//     {
-//         cout << "	ENTER book ID: ";
-//         cin >> book_idno;
-//         books *temp = head;
-//         if (temp->book_id == book_idno)
-//         {
-//             head = temp->next;
-//         }
-//         else
-//             while (1)
-//             {
-//                 if (temp->next->book_id == book_idno)
-//                 {
-//                     temp->next = temp->next->next;
-//                     break;
-//                 }
-//                 temp = temp->next;
-//             }
-//     }
-// }
+    else if (choice == 2)
+    {
+        cout << "	ENTER book ID: ";
+        cin >> book_idno;
+        books *temp = head;
+        if (temp->book_id == book_idno)
+        {
+            head = temp->next;
+        }
+        else
+            while (1)
+            {
+                if (temp->next->book_id == book_idno)
+                {
+                    temp->next = temp->next->next;
+                    break;
+                }
+                temp = temp->next;
+            }
+    }
+}
 //---------------------------------------------------main display--------------------------------------------------------
 
 void display(students *head)
@@ -834,355 +834,355 @@ int main()
         }
     }
 
-    //     else if (choice3 == 2)
-    //     {
-
-    //         cout << "CHOOSE FROM THE FOLLOWING: " << endl;
-    //         cout << "1. Add a new book\n"
-    //              << "2. Remove a book\n"
-    //              << "3. Display book list\n"
-    //              << "4. Exit\n";
-    //         cout << "Enter your choice : ";
-    //         cin >> choice2;
-    //         if (choice2 == 1)
-    //         {
-    //             cout << "ENTER NUMBER OF BOOKS TO BE ADDED: ";
-    //             cin >> n;
-    //             for (i = 0; i < n; i++)
-    //                 add_new_book(headb);
-    //         }
-
-    //         else if (choice2 == 2)
-    //         {
-    //             remove_a_book(headb);
-    //         }
-
-    //         else if (choice2 == 3)
-    //         {
-    //             display(headb);
-    //         }
-
-    //         else if (choice2 == 4)
-    //         {
-    //             exit(0);
-    //         }
-    //         else
-    //         {
-    //             cout << "INVALID INNPUT";
-    //             exit(0);
-    //         }
-    //     }
-    //     else
-    //     {
-    //         cout << "INVALID INPUT";
-    //         exit(0);
-    //     }
-    // }
-    //         else if (choice1 == 2)
-    //         {
-    //             Member obj;
-
-    //             mp.insert({{"Harry Potter", "J.K Rowling"}, true});
-    //             mp.insert({{"Fantastic Beasts", "J.K Rowling"}, true});
-    //             mp.insert({{"Shadow And Bone", "Leigh Bardugo"}, true});
-    //             mp.insert({{"Six Of Crows", "Leigh Bardugo"}, true});
-    //             mp.insert({{"Twilight", "Stephenie Meyer"}, true});
-    //             mp.insert({{"Lord Of The Rings", "J.R.R Tolkein"}, true});
-    //             mp.insert({{"The Hobbit", "J.R.R Tolkein"}, true});
-    //             mp.insert({{"IT", "Stephen King"}, true});
-    //             mp.insert({{"Goosebumps", "R.L Stine"}, true});
-    //             mp.insert({{"The Witcher", "Andrzej Sapkowski"}, true});
-    //             mp.insert({{"A Song Of Ice And Fire", "George R.R Martin"}, true});
-    //             mp.insert({{"Sherlock", "Arthur Conan Doyle"}, true});
-    //             mp.insert({{"After", "Anna Todd"}, true});
-    //             mp.insert({{"Bridgerton", "Julia Quinn"}, true});
-
-    //             cout << endl;
-    //             cout << endl;
-    //             cout << "\t\t\t\t"
-    //                  << "WELCOME TO THE LIBRARY'S USER HOMEPAGE!\n\n\n";
-
-    //             while (true)
-    //             {
-    //                 cout << "Enter Your Choice:\n\n";
-    //                 cout << "1. Search By Book Name\n2. Search By Author Name\n3. Suggest a Book Name\n\n";
-
-    //                 int x;
-    //                 cin >> x;
-    //                 cin.ignore();
-    //                 cout << endl;
-
-    //                 if (x == 1)
-    //                 {
-    //                     cout << "Enter the name of the book you want to search:\n\n";
-    //                     string s1;
-    //                     getline(cin, s1);
-    //                     cout << endl;
-
-    //                     int op = SearchByBookName(s1, mp);
-
-    //                     if (op == 1)
-    //                     {
-    //                         cout << "Yes, '" << s1 << "' is present in our collection\n\n";
-    //                     }
-
-    //                     else
-    //                     {
-    //                         cout << "Sorry for the inconvenience, There are no is no such book in our Library.\n"
-    //                              << endl;
-    //                         cout << "We will try to add "
-    //                              << "'"
-    //                              << s1 << "'"
-    //                              << " to our collection.\n\n";
-    //                     }
-    //                 }
-
-    //                 else if (x == 2)
-    //                 {
-    //                     cout << "Enter the name of the author:\n\n";
-    //                     string s2;
-    //                     getline(cin, s2);
-
-    //                     cout << endl;
-    //                     int op1 = SearchByAuthorName(s2, mp);
-
-    //                     if (op1 == 1)
-    //                     {
-    //                         cout << "Yes, books of " << s2 << " are available in our collection\n\n";
-    //                     }
-
-    //                     else
-    //                     {
-    //                         cout << "Sorry for the inconvenience. There are no books of " << s2 << " in our Library.\n";
-    //                         cout << endl;
-    //                         cout << "We will try to add " << s2 << "'s work to our collection.\n"
-    //                              << endl;
-    //                     }
-    //                 }
-
-    //                 else if (x == 3)
-    //                 {
-    //                     cout << "Enter the name of book, you would like us to add to our collection:\n\n";
-    //                     string book_name;
-    //                     getline(cin, book_name);
-    //                     cout << endl;
-
-    //                     cout << "Thanks for your suggestion, We will try to add '" << book_name << "' to our collection as soon as possible.\n\n";
-    //                 }
-
-    //                 cout << "Enter 9 if you want to Search again or Enter 0 if you want to go to our Main Menu.\n\n";
-
-    //                 int option;
-    //                 cin >> option;
-    //                 cin.ignore();
-    //                 cout << endl;
-
-    //                 if (option == 9)
-    //                     continue;
-    //                 else if (option == 0)
-    //                     break;
-    //             }
-
-    //             v.clear();
-
-    //             cout << "\t\t\t\t"
-    //                  << "WELCOME TO THE LIBRARY'S USER MAIN PAGE!\n\n\n";
-
-    //             cout << "Enter your Unique Id:\n\n";
-    //             int UId;
-    //             cin >> UId;
-    //             cin.ignore();
-    //             cout << endl;
-
-    //             while (true)
-    //             {
-    //                 cout << "MAIN MENU\n\n";
-
-    //                 cout << "1. Borrow a Book\n2. Return a Book\n3. Show Your Profile\n\n";
-    //                 int choice;
-    //                 cin >> choice;
-    //                 cin.ignore();
-    //                 cout << endl;
-
-    //                 if (choice == 1)
-    //                 {
-    //                     cout << "How do you want to search your book\n\n";
-    //                     cout << "1. By Book Name\n2. By Author Name\n\n";
-    //                     int select;
-    //                     cin >> select;
-    //                     cin.ignore();
-    //                     cout << endl;
-
-    //                     if (select == 1)
-    //                     {
-    //                         cout << "Enter, the name of the book\n\n";
-    //                         string book;
-    //                         getline(cin, book);
-    //                         cout << endl;
-    //                         int opt = SearchByBookName(book, mp);
-
-    //                         if (opt == 1)
-    //                         {
-    //                             int ot = BorrowBooks(book, mp);
-
-    //                             if (ot == 1)
-    //                             {
-    //                                 cout << "Enter the date of borrowing the book.\n\n";
-    //                                 getline(cin, obj.date_borrow);
-    //                                 cout << endl;
-
-    //                                 vp.push_back({book, obj.date_borrow});
-
-    //                                 obj.vs.insert({UId, {book, obj.date_borrow}});
-
-    //                                 cout << "'" << book << "'"
-    //                                      << " has been lent to you.\n\n";
-    //                             }
-    //                             else
-    //                                 cout << "This book is not available for borrowing. Somebody else has already borrowed it.\n\n";
-    //                         }
-    //                         else
-    //                             cout << "Sorry for the inconvenience, there are no is no such book in our Library.\n\n";
-    //                     }
-
-    //                     else if (select == 2)
-    //                     {
-    //                         cout << "Enter, the name of the Author\n\n";
-    //                         string author;
-    //                         getline(cin, author);
-    //                         cout << endl;
-
-    //                         int p1 = SearchByAuthorName(author, mp);
-
-    //                         if (p1 == 1)
-    //                         {
-    //                             cout << "Available books of " << author << " are:\n\n";
-    //                             for (auto i : v)
-    //                                 cout << "-> " << i << endl;
-
-    //                             cout << endl;
-
-    //                             cout << "Enter the name of the book to be borrowed.\n\n";
-    //                             string book1;
-    //                             getline(cin, book1);
-    //                             cout << endl;
-
-    //                             int p2 = BorrowBooks(book1, mp);
-
-    //                             if (p2 == 1)
-    //                             {
-    //                                 cout << "Enter the date of borrowing the book.\n\n";
-    //                                 getline(cin, obj.date_borrow);
-    //                                 cout << endl;
-
-    //                                 vp.push_back({book1, obj.date_borrow});
-
-    //                                 obj.vs.insert({UId, {book1, obj.date_borrow}});
-
-    //                                 cout << "'" << book1 << "'"
-    //                                      << " has been lent to you.\n\n";
-    //                             }
-
-    //                             else
-    //                                 cout << "This book is not available for borrowing. Somebody else has already borrowed it.\n\n";
-    //                         }
-
-    //                         else
-    //                             cout << "There is no book of " << author << " present in our collection\n\n";
-    //                     }
-    //                 }
-
-    //                 else if (choice == 2)
-    //                 {
-    //                     cout << "Enter the name of book to be returned\n\n";
-    //                     string book3;
-    //                     getline(cin, book3);
-
-    //                     ReturnBook(book3, mp);
-
-    //                     cout << endl;
-
-    //                     cout << "Enter the date of returning your book.\n\n";
-    //                     getline(cin, obj.date_return);
-    //                     cout << endl;
-
-    //                     vpp.push_back({book3, obj.date_return});
-
-    //                     auto it = obj.vs.begin();
-
-    //                     while (it != obj.vs.end())
-    //                     {
-    //                         if (it->first == UId and it->second.first == book3)
-    //                         {
-    //                             obj.vs.erase(it);
-    //                             break;
-    //                         }
-
-    //                         it++;
-    //                     }
-
-    //                     int fne = FineCharge(vp, vpp).first;
-    //                     int late = FineCharge(vp, vpp).second;
-
-    //                     vpp.clear();
-
-    //                     if (fne > 0)
-    //                     {
-    //                         cout << "Since, you have submitted your book after 15 days. So, you will be fined a fees of Rs 50/- for every late submit day.\n\n";
-
-    //                         cout << "You have submitted your book after " << late << " days.\n\n";
-
-    //                         cout << "Fine Charged is equal to (" << late << " - 15) * 50 = " << fne << "/-" << endl;
-    //                         cout << endl;
-    //                     }
-
-    //                     else if (fne == 0 and late >= 0)
-    //                         cout << "You have successfully submitted the book that you borrowed from the library with no fine as returned your book after " << late << " days.\n\n";
-
-    //                     else
-    //                         cout << "Please, Enter a Valid Date!\n\n";
-    //                 }
-
-    //                 else if (choice == 3)
-    //                 {
-    //                     if (!(obj.vs.empty()))
-    //                         ShowDetail(obj.vs);
-    //                     else
-    //                     {
-    //                         cout << "Currently, you haven't borrowed any book from our Library!\n";
-    //                         cout << "Once, you borrowed any book, your Proflie will automatically get Updated!\n\n";
-    //                     }
-    //                 }
-
-    //                 else
-    //                 {
-    //                     cout << "INVALID INPUT!\n\n";
-    //                 }
-
-    //                 cout << "Press 1 if you want to continue or Press 0 if you want to quit.\n\n";
-    //                 int enter;
-    //                 cin >> enter;
-    //                 cin.ignore();
-    //                 cout << endl;
-
-    //                 if (enter == 1)
-    //                     continue;
-    //                 else if (enter == 0)
-    //                     goto last;
-    //             }
-    //         }
-    //         else
-    //         {
-    //             cout << "INVALID INPUT";
-    //             exit(0);
-    //         }
-    //     }
-
-    // last:
-
-    //     cout << endl;
-
-    //     cout << "Thanks for visiting our Library!\n\n";
-
-    return 0;
+    else if (choice3 == 2)
+    {
+
+        cout << "CHOOSE FROM THE FOLLOWING: " << endl;
+        cout << "1. Add a new book\n"
+             << "2. Remove a book\n"
+             << "3. Display book list\n"
+             << "4. Exit\n";
+        cout << "Enter your choice : ";
+        cin >> choice2;
+        if (choice2 == 1)
+        {
+            cout << "ENTER NUMBER OF BOOKS TO BE ADDED: ";
+            cin >> n;
+            for (i = 0; i < n; i++)
+                add_new_book(headb);
+        }
+
+        else if (choice2 == 2)
+        {
+            remove_a_book(headb);
+        }
+
+        else if (choice2 == 3)
+        {
+            display(headb);
+        }
+
+        else if (choice2 == 4)
+        {
+            exit(0);
+        }
+        else
+        {
+            cout << "INVALID INNPUT";
+            exit(0);
+        }
+    }
+    else
+    {
+        cout << "INVALID INPUT";
+        exit(0);
+    }
+}
+//         else if (choice1 == 2)
+//         {
+//             Member obj;
+
+//             mp.insert({{"Harry Potter", "J.K Rowling"}, true});
+//             mp.insert({{"Fantastic Beasts", "J.K Rowling"}, true});
+//             mp.insert({{"Shadow And Bone", "Leigh Bardugo"}, true});
+//             mp.insert({{"Six Of Crows", "Leigh Bardugo"}, true});
+//             mp.insert({{"Twilight", "Stephenie Meyer"}, true});
+//             mp.insert({{"Lord Of The Rings", "J.R.R Tolkein"}, true});
+//             mp.insert({{"The Hobbit", "J.R.R Tolkein"}, true});
+//             mp.insert({{"IT", "Stephen King"}, true});
+//             mp.insert({{"Goosebumps", "R.L Stine"}, true});
+//             mp.insert({{"The Witcher", "Andrzej Sapkowski"}, true});
+//             mp.insert({{"A Song Of Ice And Fire", "George R.R Martin"}, true});
+//             mp.insert({{"Sherlock", "Arthur Conan Doyle"}, true});
+//             mp.insert({{"After", "Anna Todd"}, true});
+//             mp.insert({{"Bridgerton", "Julia Quinn"}, true});
+
+//             cout << endl;
+//             cout << endl;
+//             cout << "\t\t\t\t"
+//                  << "WELCOME TO THE LIBRARY'S USER HOMEPAGE!\n\n\n";
+
+//             while (true)
+//             {
+//                 cout << "Enter Your Choice:\n\n";
+//                 cout << "1. Search By Book Name\n2. Search By Author Name\n3. Suggest a Book Name\n\n";
+
+//                 int x;
+//                 cin >> x;
+//                 cin.ignore();
+//                 cout << endl;
+
+//                 if (x == 1)
+//                 {
+//                     cout << "Enter the name of the book you want to search:\n\n";
+//                     string s1;
+//                     getline(cin, s1);
+//                     cout << endl;
+
+//                     int op = SearchByBookName(s1, mp);
+
+//                     if (op == 1)
+//                     {
+//                         cout << "Yes, '" << s1 << "' is present in our collection\n\n";
+//                     }
+
+//                     else
+//                     {
+//                         cout << "Sorry for the inconvenience, There are no is no such book in our Library.\n"
+//                              << endl;
+//                         cout << "We will try to add "
+//                              << "'"
+//                              << s1 << "'"
+//                              << " to our collection.\n\n";
+//                     }
+//                 }
+
+//                 else if (x == 2)
+//                 {
+//                     cout << "Enter the name of the author:\n\n";
+//                     string s2;
+//                     getline(cin, s2);
+
+//                     cout << endl;
+//                     int op1 = SearchByAuthorName(s2, mp);
+
+//                     if (op1 == 1)
+//                     {
+//                         cout << "Yes, books of " << s2 << " are available in our collection\n\n";
+//                     }
+
+//                     else
+//                     {
+//                         cout << "Sorry for the inconvenience. There are no books of " << s2 << " in our Library.\n";
+//                         cout << endl;
+//                         cout << "We will try to add " << s2 << "'s work to our collection.\n"
+//                              << endl;
+//                     }
+//                 }
+
+//                 else if (x == 3)
+//                 {
+//                     cout << "Enter the name of book, you would like us to add to our collection:\n\n";
+//                     string book_name;
+//                     getline(cin, book_name);
+//                     cout << endl;
+
+//                     cout << "Thanks for your suggestion, We will try to add '" << book_name << "' to our collection as soon as possible.\n\n";
+//                 }
+
+//                 cout << "Enter 9 if you want to Search again or Enter 0 if you want to go to our Main Menu.\n\n";
+
+//                 int option;
+//                 cin >> option;
+//                 cin.ignore();
+//                 cout << endl;
+
+//                 if (option == 9)
+//                     continue;
+//                 else if (option == 0)
+//                     break;
+//             }
+
+//             v.clear();
+
+//             cout << "\t\t\t\t"
+//                  << "WELCOME TO THE LIBRARY'S USER MAIN PAGE!\n\n\n";
+
+//             cout << "Enter your Unique Id:\n\n";
+//             int UId;
+//             cin >> UId;
+//             cin.ignore();
+//             cout << endl;
+
+//             while (true)
+//             {
+//                 cout << "MAIN MENU\n\n";
+
+//                 cout << "1. Borrow a Book\n2. Return a Book\n3. Show Your Profile\n\n";
+//                 int choice;
+//                 cin >> choice;
+//                 cin.ignore();
+//                 cout << endl;
+
+//                 if (choice == 1)
+//                 {
+//                     cout << "How do you want to search your book\n\n";
+//                     cout << "1. By Book Name\n2. By Author Name\n\n";
+//                     int select;
+//                     cin >> select;
+//                     cin.ignore();
+//                     cout << endl;
+
+//                     if (select == 1)
+//                     {
+//                         cout << "Enter, the name of the book\n\n";
+//                         string book;
+//                         getline(cin, book);
+//                         cout << endl;
+//                         int opt = SearchByBookName(book, mp);
+
+//                         if (opt == 1)
+//                         {
+//                             int ot = BorrowBooks(book, mp);
+
+//                             if (ot == 1)
+//                             {
+//                                 cout << "Enter the date of borrowing the book.\n\n";
+//                                 getline(cin, obj.date_borrow);
+//                                 cout << endl;
+
+//                                 vp.push_back({book, obj.date_borrow});
+
+//                                 obj.vs.insert({UId, {book, obj.date_borrow}});
+
+//                                 cout << "'" << book << "'"
+//                                      << " has been lent to you.\n\n";
+//                             }
+//                             else
+//                                 cout << "This book is not available for borrowing. Somebody else has already borrowed it.\n\n";
+//                         }
+//                         else
+//                             cout << "Sorry for the inconvenience, there are no is no such book in our Library.\n\n";
+//                     }
+
+//                     else if (select == 2)
+//                     {
+//                         cout << "Enter, the name of the Author\n\n";
+//                         string author;
+//                         getline(cin, author);
+//                         cout << endl;
+
+//                         int p1 = SearchByAuthorName(author, mp);
+
+//                         if (p1 == 1)
+//                         {
+//                             cout << "Available books of " << author << " are:\n\n";
+//                             for (auto i : v)
+//                                 cout << "-> " << i << endl;
+
+//                             cout << endl;
+
+//                             cout << "Enter the name of the book to be borrowed.\n\n";
+//                             string book1;
+//                             getline(cin, book1);
+//                             cout << endl;
+
+//                             int p2 = BorrowBooks(book1, mp);
+
+//                             if (p2 == 1)
+//                             {
+//                                 cout << "Enter the date of borrowing the book.\n\n";
+//                                 getline(cin, obj.date_borrow);
+//                                 cout << endl;
+
+//                                 vp.push_back({book1, obj.date_borrow});
+
+//                                 obj.vs.insert({UId, {book1, obj.date_borrow}});
+
+//                                 cout << "'" << book1 << "'"
+//                                      << " has been lent to you.\n\n";
+//                             }
+
+//                             else
+//                                 cout << "This book is not available for borrowing. Somebody else has already borrowed it.\n\n";
+//                         }
+
+//                         else
+//                             cout << "There is no book of " << author << " present in our collection\n\n";
+//                     }
+//                 }
+
+//                 else if (choice == 2)
+//                 {
+//                     cout << "Enter the name of book to be returned\n\n";
+//                     string book3;
+//                     getline(cin, book3);
+
+//                     ReturnBook(book3, mp);
+
+//                     cout << endl;
+
+//                     cout << "Enter the date of returning your book.\n\n";
+//                     getline(cin, obj.date_return);
+//                     cout << endl;
+
+//                     vpp.push_back({book3, obj.date_return});
+
+//                     auto it = obj.vs.begin();
+
+//                     while (it != obj.vs.end())
+//                     {
+//                         if (it->first == UId and it->second.first == book3)
+//                         {
+//                             obj.vs.erase(it);
+//                             break;
+//                         }
+
+//                         it++;
+//                     }
+
+//                     int fne = FineCharge(vp, vpp).first;
+//                     int late = FineCharge(vp, vpp).second;
+
+//                     vpp.clear();
+
+//                     if (fne > 0)
+//                     {
+//                         cout << "Since, you have submitted your book after 15 days. So, you will be fined a fees of Rs 50/- for every late submit day.\n\n";
+
+//                         cout << "You have submitted your book after " << late << " days.\n\n";
+
+//                         cout << "Fine Charged is equal to (" << late << " - 15) * 50 = " << fne << "/-" << endl;
+//                         cout << endl;
+//                     }
+
+//                     else if (fne == 0 and late >= 0)
+//                         cout << "You have successfully submitted the book that you borrowed from the library with no fine as returned your book after " << late << " days.\n\n";
+
+//                     else
+//                         cout << "Please, Enter a Valid Date!\n\n";
+//                 }
+
+//                 else if (choice == 3)
+//                 {
+//                     if (!(obj.vs.empty()))
+//                         ShowDetail(obj.vs);
+//                     else
+//                     {
+//                         cout << "Currently, you haven't borrowed any book from our Library!\n";
+//                         cout << "Once, you borrowed any book, your Proflie will automatically get Updated!\n\n";
+//                     }
+//                 }
+
+//                 else
+//                 {
+//                     cout << "INVALID INPUT!\n\n";
+//                 }
+
+//                 cout << "Press 1 if you want to continue or Press 0 if you want to quit.\n\n";
+//                 int enter;
+//                 cin >> enter;
+//                 cin.ignore();
+//                 cout << endl;
+
+//                 if (enter == 1)
+//                     continue;
+//                 else if (enter == 0)
+//                     goto last;
+//             }
+//         }
+//         else
+//         {
+//             cout << "INVALID INPUT";
+//             exit(0);
+//         }
+//     }
+
+// last:
+
+//     cout << endl;
+
+//     cout << "Thanks for visiting our Library!\n\n";
+
+return 0;
 }
