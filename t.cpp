@@ -11,7 +11,7 @@ public:
     string student_name;
     string dob, date;
     string name_issued_book;
-    int day_issued = 0, month_issued = 0, year_issued = 0;
+    int day_issued = 00, month_issued = 00, year_issued = 00;
     int day_returned = 0, month_returned = 0, year_returned = 0;
     int unique_id;
     int prime_id;
@@ -736,10 +736,12 @@ void display(students *head)
         cout << tmp->name_issued_book;
         for (i = 0; i < 21 - (tmp->name_issued_book.length()); i++)
             cout << " ";
-        cout << tmp->day_issued << " " << tmp->month_issued << " " << tmp->year_issued;
-        cout << "            ";
-        cout << tmp->day_returned << " " << tmp->month_returned << " " << tmp->year_returned;
-        cout << "             ";
+        // cout << tmp->day_issued << " " << tmp->month_issued << " " << tmp->year_issued;
+        printf("%.2d  %.2d  %.4d", tmp->day_issued, tmp->month_issued, tmp->month_issued);
+        cout << "        ";
+        // cout << tmp->day_returned << " " << tmp->month_returned << " " << tmp->year_returned;
+        printf("%.2d  %.2d  %.4d", tmp->day_returned, tmp->month_returned, tmp->month_returned);
+        cout << "         ";
         fine_charging(tmp);
         cout << tmp->fine_charged << endl;
         if (tmp->next == NULL)
